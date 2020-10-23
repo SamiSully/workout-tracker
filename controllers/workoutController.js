@@ -1,45 +1,57 @@
+const { Router } = require("express");
 const express = require("express");
 const router = express.Router();
 
 const db = require("../models");
 
-// router.get("/api/ingredients", (req, res) => {
-//   db.Ingredient.find({})
-//     .then((foundIngredients) => {
-//       res.json(foundIngredients);
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//       res.json({
-//         error: true,
-//         data: null,
-//         message: "Failed to retrieve ingredients.",
-//       });
-//     });
-// });
+// router to find the workouts
+router.get("/api/workouts", (req, res) => {
+  db.Workout.find({})
+    .then((foundWorkout) => {
+      res.json(foundWorkout);
+    })
+    .catch((err) => {
+      res.json(err);
+    });
+});
 
-// router.post("/api/ingredients", (req, res) => {
-//   db.Ingredient.create(req.body)
-//     .then((newIngredient) => {
-//       res.json(newIngredient);
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//       res.json({
-//         error: true,
-//         data: null,
-//         message: "Failed to create new ingredient.",
-//       });
-//     });
-// });
+// router to post the workouts to the page
+router.post("/api/workouts", (req, res) => {
+  db.Workout.create(req.body)
+    .then((createdWorkout) => {
+      res.json(createdWorkout);
+    })
+    .catch((err) => {
+      res.json(err);
+    });
+});
 
-// router
-//   .put("/api/ingredients", (req, res) => {
-//     db.ingredient.findOneAndUpdate(
-//       { _id: req.params.id },
-//       { $set: { name: req.body } }
-//     );
-//   })
-//   .then(updatedIngredient);
+// router to retreive the exercises
+router.get("/api/exercises", (req, res) => {
+  db.Exercise.find({})
+    .then((foundExercises) => {
+      res.json(foundExercises);
+    })
+    .catch((err) => {
+      res.json(err);
+    });
+});
+
+// router to put the exercises in by their id
+router.put("/api/exercises", (req, res) => {
+  db.Exercise.findByIDAndUpdate(
+    req.params.id,
+    {
+      $push: { exercise: req.body },
+    },
+    { new: true }
+  )
+    .then((placeExercises) => {
+      res.json(placeExercises);
+    })
+    .catch((err) => {
+      res.json(err);
+    });
+});
 
 module.exports = router;
