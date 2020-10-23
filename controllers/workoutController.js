@@ -28,7 +28,7 @@ router.post("/api/workouts", (req, res) => {
 
 // router to retreive the exercises
 router.get("/api/exercises", (req, res) => {
-  db.Exercise.find({})
+  db.Workout.find({})
     .then((foundExercises) => {
       res.json(foundExercises);
     })
@@ -38,16 +38,16 @@ router.get("/api/exercises", (req, res) => {
 });
 
 // router to put the exercises in by their id
-router.put("/api/exercises", (req, res) => {
-  db.Exercise.findByIDAndUpdate(
+router.put("/api/workouts/:id", (req, res) => {
+  db.Workout.findByIdAndUpdate(
     req.params.id,
     {
       $push: { exercise: req.body },
     },
     { new: true }
   )
-    .then((placeExercises) => {
-      res.json(placeExercises);
+    .then((updatedWorkout) => {
+      res.json(updatedWorkout);
     })
     .catch((err) => {
       res.json(err);
