@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+// const virtuals = { toJSON: { virtuals: true } };
 // Meow
 const WorkoutSchema = new Schema({
   day: {
@@ -17,6 +18,7 @@ const WorkoutSchema = new Schema({
       distance: Number,
     },
   ],
+  // virtuals,
   //   toJSON: {
   //     // include any virtual properties when data is requested
   //     virtuals: true,
