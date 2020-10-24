@@ -1,4 +1,3 @@
-const { Router } = require("express");
 const express = require("express");
 const router = express.Router();
 
@@ -39,10 +38,11 @@ router.get("/api/exercises", (req, res) => {
 
 // router to put the exercises in by their id
 router.put("/api/workouts/:id", (req, res) => {
+  console.log(req);
   db.Workout.findByIdAndUpdate(
     req.params.id,
     {
-      $push: { exercise: req.body },
+      $push: { exercises: req.body },
     },
     { new: true }
   )
